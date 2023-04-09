@@ -18,29 +18,78 @@ body {
     display: grid;
     grid-template-rows: 3fr 5fr;
     padding: 15px;
-    gap: 10px;
+    gap: 15px;
 }
+
+
+/* Top of Calculator */
 
 #display {
     background-color: rgb(240, 240, 240);
     border-radius: 7px;
+    display: grid;
+    grid-template-rows: 4fr 3fr;
+    justify-content: flex-end;
+    padding: 30px;
 }
+
+#display > * {
+    text-align: end;
+}
+
+#calculation {
+    flex: 1 0 20px;
+    align-self: flex-end;
+    padding: 15px 0;
+}
+
+#result {
+    flex: 2 0 20px;
+    align-self: center;
+    font-size: 30px;
+}
+
+
+
+
+/* Bottom of Calculator */
 
 #buttonsgrid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(5, 1fr);
-    gap: 5px;
+    gap: 8px;
 }
 
-#buttonsgrid > * {
+button {
     font-size: 25px;
+    border-radius: 4px;
+    border: none; 
 }
+
+button:active {
+    transform: scale(1.05);
+    transition: 0.1s;
+    
+}
+
 
 #resultbutton {
-    background-color: rgb(46, 120, 238);
+    background-color: rgb(74, 138, 242);
+    color: rgb(56, 56, 56);
+}
+
+#resultbutton:active {
+    background-color: rgb(52, 87, 158);
+    color: azure;
 }
 
 .operators {
-    background-color: rgb(248, 136, 192);
+    background-color: rgb(226, 102, 102);
 }
+
+.operators:active {
+    background-color: rgb(172, 51, 51);
+    color: azure;
+}
+
