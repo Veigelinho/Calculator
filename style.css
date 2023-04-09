@@ -17,7 +17,7 @@ body {
 
     display: grid;
     grid-template-rows: 3fr 5fr;
-    padding: 15px;
+    padding: 20px;
     gap: 15px;
 }
 
@@ -67,20 +67,34 @@ button {
     border: none; 
 }
 
-button:active {
+
+
+button:hover {
     transform: scale(1.05);
-    transition: 0.1s;
-    
+}
+
+button:active {
+    transform:  scale(0.95);
+    transition: 0.05s;
+}
+
+.arrows {
+    display: grid;
+    gap: 3px;
+    width: auto;
+    justify-content: center;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr;
 }
 
 
-#resultbutton {
+#equalsbutton {
     background-color: rgb(74, 138, 242);
     color: rgb(56, 56, 56);
 }
 
-#resultbutton:active {
-    background-color: rgb(52, 87, 158);
+#equalsbutton:active {
+    background-color: rgb(27, 75, 170);
     color: azure;
 }
 
