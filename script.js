@@ -1,54 +1,62 @@
 const buttons = document.querySelectorAll('button')
 const displayResult = document.getElementById('result')
+const operatorButtons = document.getElementsByClassName('operators')
 const equalsButton = document.getElementById('equalsbutton')
-const calculationButton = document.getElementById('calculation')
+const calculation = document.getElementById('calculation')
 const clearButton = document.getElementById('clear')
 const deleteButton = document.getElementById('delete')
-
 const numberButtons = document.getElementsByClassName('numbers')
+
 for (let number of numberButtons) {
-    number.onclick = (e) => addNumbers(e.target.innerText)
+    number.onclick = (e) => updateResult(e.target)
 }
 
-function addNumbers (number) {
-    if (displayResult.innerText == '0') {
-        displayResult.innerText = number;
+var currentOperator = null;
+var secondOperator = true;
+
+for (let operator of operatorButtons) {
+    operator.onclick = (e) => {
+        // evaluate()
+        // currentOperator = operator.innerText;
+        if (secondOperator) {
+            updateEquasion(e.target)
+        }
+        updateResult(e.target)
+        
     }
-    else {
-    displayResult.innerText += number;
+}
+
+function updateResult(input) {
+    console.log(input)
+    if (input.classList == 'operators') {
+    
+        if (secondOperator) {
+            displayResult.innerText = `${displayResult.innerText} ${input.innerText} `
+            secondOperator = false;
+        }
     }
-    console.log(displayResult.innerText)
+    else if (input.classList == "numbers") {
+        if (displayResult.innerText == '0')
+        displayResult.innerText = input.innerText;
+        else {
+            displayResult.innerText = `${displayResult.innerText}${input.innerText}`
+        }
+        secondOperator = true;
+    }
+    
 }
 
 
-
-
-equalsButton.onclick = () => {
-    calculationButton.innerText = displayResult.innerText
+function updateEquasion (input) {
+    calculation.innerText = `${displayResult.innerText} ${input.innerText}`
 }
+
+
+equalsButton.onclick = (e) => updateEquasion(e.target)
 
 
 
 clearButton.onclick = () => {
     displayResult.innerText = 0;
-    calculationButton.innerText = "-";
+    calculation.innerText = "";
 }
-
-
-
-// for (let button of buttons) {
-// button.onclick = (e) => {
-//     const buttonContent = e.target.innerText;
-    
-
-//     const numbersButtonsText = /[0-9]/
-//     const operatorsButtonsText = /[+-×÷]/
-    
-//     if (numbersButtonsText.test(buttonContent)) {
-        
-//     }
-
-//     else if (operatorsButtonsText.test(buttonContent)) {
-        
-//     }
-// }}
