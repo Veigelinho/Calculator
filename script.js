@@ -21,16 +21,28 @@ for (let operator of operatorButtons) {
     operator.onclick = (e) => {
         // evaluate()
         // currentOperator = operator.innerText;
-        if (secondOperator) {
+        if (currentOperator != null){ //(currentOperator != null) {
+            lastNum = currentNum
+            currentNum = displayResult.innerText
+            console.log(lastNum)
+            console.log(currentNum)
+            console.log(evaluate(lastNum, currentNum, currentOperator))
+            currentOperator = e.target.innerText
+        }
+        
+        
+        else {
+            currentOperator = e.target.innerText
             updateEquasion(e.target)
         }
         updateResult(e.target)
-        
     }
 }
 
+
+
 function updateResult(input) {
-    
+
     if (input.classList == "numbers") {
         if (displayResult.innerText == '0')
         displayResult.innerText = input.innerText;
@@ -38,7 +50,9 @@ function updateResult(input) {
             displayResult.innerText = `${displayResult.innerText}${input.innerText}`
         }
         secondOperator = true;
+        currentNum = displayResult.innerText
         updateEquasion(input)
+
     }
 
     
@@ -47,6 +61,7 @@ function updateResult(input) {
     }
 
 }
+
 
 
 function updateEquasion (input) {
