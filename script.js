@@ -9,6 +9,7 @@ const numberButtons = document.getElementsByClassName('numbers')
 
 var currentOperator = null;
 var lastOperator = null;
+var lastInputIsOperator = false
 var lastNum = null;
 var currentNum = null;
 
@@ -19,21 +20,24 @@ for (let number of numberButtons) {
 
 for (let operator of operatorButtons) {
     operator.onclick = (e) => {
-        // evaluate()
-        // currentOperator = operator.innerText;
-        if (currentOperator != null){ //(currentOperator != null) {
-            lastNum = currentNum
+        
+        if (!lastInputIsOperator){ 
             currentNum = displayResult.innerText
-            console.log(lastNum)
-            console.log(currentNum)
-            console.log(evaluate(lastNum, currentNum, currentOperator))
-            currentOperator = e.target.innerText
+            currentOperator = operator.innerText
+            updateResult(evaluate(lastNum, currentNum, currentOperator))
+            lastInputIsOperator = true
         }
         
-        
+        if (lastInputIsOperator) {
+
+        }
+
+
+
         else {
-            currentOperator = e.target.innerText
-            updateEquasion(e.target)
+            lastNum = displayResult.innerText
+            currentOperator = operator.innerText
+            updateEquasion(operator)
         }
         updateResult(e.target)
     }
@@ -49,15 +53,20 @@ function updateResult(input) {
         else {
             displayResult.innerText = `${displayResult.innerText}${input.innerText}`
         }
-        secondOperator = true;
+        lastInputIsOperator = false;
         currentNum = displayResult.innerText
-        updateEquasion(input)
-
     }
 
     
     else if (input.id == "equalsbutton") {
-        updateEquasion(input)
+        if (lastOperator != null) {
+            currentNum = displayResult.innerText
+            updateEquasion(input)
+            updateResult(evaluate(currentNum, lastNum, lastOperator))
+        }
+        else {
+            
+        }
     }
 
 }
@@ -65,25 +74,31 @@ function updateResult(input) {
 
 
 function updateEquasion (input) {
-    if (input.id == "equalsbutton") {
-        calculation.innerText = displayResult.innerText + " " + input.innerText;
-    }
-    else if (calculation.innerText == "-") {
+    console.log(input.classList)
+    if (calculation.innerText == "enter your calculation") {
         calculation.innerText = input.innerText
+    }
+    else if (input.id == "equalsbutton") {
+        calculation.innerText = displayResult.innerText + " " + input.innerText; 
+    }
+    else if (input.classList == "operators") {
+        calculation.innerText = `${displayResult.innerText} ${input.innerText}`
     }
     else calculation.innerText = displayResult.innerText
 }
 
 
 
-equalsButton.onclick = (e) => updateResult(e.target)
-
+equalsButton.onclick = (e) => {
+    evaluate()
+    updateResult(e.target)
+}
 
 
 
 clearButton.onclick = () => {
     displayResult.innerText = 0;
-    calculation.innerText = "-";
+    calculation.innerText = "enter your calculation";
 }
 // if (input.classList == 'operators') {
         
@@ -106,19 +121,19 @@ clearButton.onclick = () => {
 
 
 
-function evaluate(lastNum, currentNum, operator) {
+function evaluate(num1, num2, operator) {
     switch (operator) {
         case "+":
-            return lastNum + currentNum;
+            return num1 + num2;
         case "-":
-            return lastNum - currentNum;
+            return num1 - num2;
         case "×":
-            return lastNum * currentNum;
+            return num1 * num2;
         case "÷":
-            if (currentNum == 0) {
+            if (num2 == 0) {
                 return "you can't divide by 0"
             }
-            else return lastNum/currentNum;
+            else return num1/num2;
     }
 }
 
