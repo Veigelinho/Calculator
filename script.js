@@ -8,6 +8,7 @@ const calculationStartText = "0"
 const clearButton = document.getElementById('clear')
 const deleteButton = document.getElementById('delete')
 const numberButtons = document.getElementsByClassName('numbers')
+const ANSButton = document.getElementById('lastanswer')
 
 var currentOperator = null;
 var lastOperator = null;
@@ -15,12 +16,23 @@ var lastInputIsOperator = false
 var lastNum = null;
 var currentNum = null;
 var isResult = false;
+var currentResult = 0;
+
 
 for (let number of numberButtons) {
     lastInputIsOperator = false
     number.onclick = () => {
         console.log(calculation.innerText.charAt(calculation.innerText.length-1))
-        if (((displayResult.innerText == 0) || isResult) && (number.innerText != ".")) { //(calculation.innerText.charAt(calculation.innerText.length-1) == "=") ||
+        if (number.id == "lastanswer") {
+            if (displayResult.innerText == 0) {
+                displayResult.innerText = currentResult
+            }
+            else {
+            displayResult.innerText += currentResult
+            }
+        }
+    
+        else if (((displayResult.innerText == 0) || isResult) && (number.innerText != ".")) { //(calculation.innerText.charAt(calculation.innerText.length-1) == "=") ||
             calculation.innerText += " "
             displayResult.innerText = number.innerText
             isResult = false;
@@ -49,14 +61,16 @@ for (let operator of operatorButtons) {
             if ((currentOperator != null) && (calculation.innerText.slice(-1) != "/\d/")) {
                 currentNum = displayResult.innerText
                 calculation.innerText = lastNum + " " + currentOperator + " " + currentNum + " " + operaterText
-                console.log(evaluate(lastNum, currentNum, currentOperator))
                 displayResult.innerText = evaluate(lastNum, currentNum, currentOperator)
+                currentResult = displayResult.innerText
                 currentOperator = null
                 isResult = true
+                currentResult = displayResult.innerText
             }
             else if (currentOperator == null) {
                 calculation.innerText = displayResult.innerText + " " + operator.innerText
-                isResult = true     
+                isResult = true
+                currentResult = displayResult.innerText   
             }
                   
         }
@@ -75,7 +89,7 @@ for (let operator of operatorButtons) {
                 evaluate (lastNum, currentNum, operator.innerText)
                 calculation.innerText = evaluate (lastNum, currentNum, operator.innerText)
                 isResult = true;
-
+                currentResult = displayResult.innerText
             }
         }
     }
